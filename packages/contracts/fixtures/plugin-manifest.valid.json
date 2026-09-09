@@ -1,0 +1,11 @@
+{
+  "apiVersion": "kakune.dev/v1",
+  "kind": "Plugin",
+  "metadata": {
+    "name": "@kakune/reports",
+    "version": "1.2.3",
+    "description": "Builds reports."
+  },
+  "entrypoint": { "module": "./dist/index.js", "export": "default" },
+  "capabilities": ["network"]
+}

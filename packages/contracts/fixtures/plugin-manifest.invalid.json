@@ -1,0 +1,6 @@
+{
+  "apiVersion": "kakune.dev/v1",
+  "kind": "Plugin",
+  "metadata": { "name": "reports", "version": "1.2" },
+  "entrypoint": { "module": "dist/index.js" }
+}

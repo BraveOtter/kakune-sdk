@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kakune.dev/schemas/core-info.schema.json",
+  "title": "Kakune Core Information",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "coreVersion", "capabilities"],
+  "properties": {
+    "apiVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+    "coreVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$" },
+    "serverTime": { "type": "string", "format": "date-time" },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
+  }
+}

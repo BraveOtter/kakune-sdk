@@ -1,0 +1,6 @@
+{
+  "jsonrpc": "2.0",
+  "id": "request-1",
+  "method": "plugin.execute",
+  "params": { "input": "hello" }
+}

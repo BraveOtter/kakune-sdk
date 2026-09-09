@@ -1,0 +1,14 @@
+{
+  "apiVersion": "kakune/v1",
+  "kind": "Workflow",
+  "metadata": {
+    "name": "nightly-report",
+    "labels": { "team": "platform" }
+  },
+  "spec": {
+    "triggers": { "schedule": { "cron": "0 0 * * *" } },
+    "steps": [
+      { "id": "build-report", "plugin": "@kakune/reports", "with": { "format": "json" } }
+    ]
+  }
+}

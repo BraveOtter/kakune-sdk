@@ -1,0 +1,23 @@
+{
+  "name": "@kakune/contracts",
+  "version": "0.1.0",
+  "description": "Canonical Kakune protocol types and JSON Schemas.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["dist", "schemas"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./schemas/core-info.schema.json": "./schemas/core-info.schema.json",
+    "./schemas/workflow.schema.json": "./schemas/workflow.schema.json",
+    "./schemas/plugin-manifest.schema.json": "./schemas/plugin-manifest.schema.json",
+    "./schemas/plugin-json-rpc-message.schema.json": "./schemas/plugin-json-rpc-message.schema.json"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "tsc -b tsconfig.json --clean",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}
