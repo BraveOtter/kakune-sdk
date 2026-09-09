@@ -1,0 +1,19 @@
+{
+  "name": "@kakune/client",
+  "version": "0.1.0",
+  "description": "Fetch and Server-Sent Events client for the Kakune API.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "tsc -b tsconfig.json --clean",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}
