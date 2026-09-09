@@ -1,0 +1,22 @@
+{
+  "name": "@kakune/create-plugin",
+  "version": "0.1.0",
+  "description": "Create a baseline Kakune plugin.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["dist"],
+  "bin": {
+    "kakune-create-plugin": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "tsc -b tsconfig.json --clean",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}
