@@ -2,3 +2,22 @@ node_modules/
 dist/
 coverage/
 .pnpm-store/
+
+# TypeScript/Vite incremental state and test output.
+*.tsbuildinfo
+.vite/
+.vitest/
+test-results/
+playwright-report/
+
+# Rust contract-conformance harness build products. The harness source and
+# Cargo.lock are versioned; Cargo's target directory is reproducible output.
+packages/contracts/rust-harness/target/
+
+# Locally packed npm archives and platform/editor state.
+*.tgz
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
