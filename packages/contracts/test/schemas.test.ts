@@ -6,7 +6,11 @@ const schemaNames = [
   "core-info",
   "workflow",
   "plugin-manifest",
-  "plugin-json-rpc-message"
+  "plugin-json-rpc-message",
+  "core-sse-event",
+  "connection-context-export",
+  "provider-model-capabilities",
+  "problem-details"
 ] as const;
 
 async function readJson(relativePath: string): Promise<unknown> {
@@ -33,4 +37,18 @@ describe("canonical schemas", () => {
       expect(validate(fixture)).toBe(false);
     });
   }
+
+  it("accepts every shipped process-plugin example manifest", async () => {
+    const schema = await readJson("../schemas/plugin-manifest.schema.json");
+    const validate = new Ajv2020({ allErrors: true, strict: false, validateFormats: false }).compile(schema);
+    const manifests = await Promise.all([
+      readJson("../../../examples/sample-typescript/kakune.plugin.json"),
+      readJson("../../../examples/external-python/kakune.plugin.json"),
+      readJson("../../../examples/git-adapter/kakune.plugin.json")
+    ]);
+
+    for (const manifest of manifests) {
+      expect(validate(manifest), JSON.stringify(validate.errors)).toBe(true);
+    }
+  });
 });

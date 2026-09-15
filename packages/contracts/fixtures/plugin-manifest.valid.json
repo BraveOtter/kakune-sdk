@@ -1,11 +1,21 @@
 {
-  "apiVersion": "kakune.dev/v1",
-  "kind": "Plugin",
-  "metadata": {
-    "name": "@kakune/reports",
-    "version": "1.2.3",
-    "description": "Builds reports."
+  "manifestVersion": "1.0",
+  "id": "kakune.reports",
+  "name": "Reports",
+  "version": "1.2.3",
+  "pluginProtocol": ">=1.0.0 <2.0.0",
+  "runtime": {
+    "kind": "process",
+    "command": "node",
+    "args": ["dist/index.js"]
   },
-  "entrypoint": { "module": "./dist/index.js", "export": "default" },
-  "capabilities": ["network"]
+  "author": { "name": "Kakune" },
+  "description": { "en": "Builds reports." },
+  "license": "MIT",
+  "model": "hosted",
+  "requires": {
+    "executables": [{ "name": "node", "version": ">=22.0.0", "versionArgs": ["--version"] }]
+  },
+  "contributes": { "nodes": ["nodes/report.node.json"] },
+  "permissions": { "network": ["https://reports.example"] }
 }

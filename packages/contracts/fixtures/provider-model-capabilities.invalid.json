@@ -1,0 +1,15 @@
+{
+  "apiVersion": "kakune.dev/v1",
+  "kind": "ProviderModelCapabilities",
+  "provider": {
+    "id": "minimax personal",
+    "capabilities": ["unknown-capability"]
+  },
+  "models": [
+    {
+      "id": "MiniMax-M3",
+      "capabilities": ["text-generation"],
+      "contextWindowTokens": 0
+    }
+  ]
+}

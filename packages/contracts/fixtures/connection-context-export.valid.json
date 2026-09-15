@@ -1,0 +1,15 @@
+{
+  "format": "kakune-contexts/v1",
+  "exportedAt": "2026-09-09T12:34:56Z",
+  "activeContextId": "local",
+  "contexts": [
+    {
+      "id": "local",
+      "name": "Local Core",
+      "endpoint": "http://127.0.0.1:7331",
+      "expectedCoreId": "core-local-1",
+      "color": "#2E7D32",
+      "credentialRef": "keychain:kakune/local"
+    }
+  ]
+}

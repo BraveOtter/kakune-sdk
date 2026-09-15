@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kakune.dev/schemas/connection-context-export.schema.json",
+  "title": "Kakune Connection Context Export v1",
+  "description": "Portable client connection metadata. Credential references may be exported, but credential values must never be included.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "exportedAt", "contexts"],
+  "properties": {
+    "format": { "const": "kakune-contexts/v1" },
+    "exportedAt": { "type": "string", "format": "date-time" },
+    "activeContextId": { "$ref": "#/$defs/id" },
+    "contexts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/context" },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "endpoint"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "endpoint": { "type": "string", "format": "uri", "pattern": "^https?://" },
+        "expectedCoreId": { "$ref": "#/$defs/id" },
+        "color": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+        "credentialRef": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    }
+  }
+}

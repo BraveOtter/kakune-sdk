@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kakune.dev/schemas/core-sse-event.schema.json",
+  "title": "Kakune Core SSE Event Envelope v1",
+  "description": "The JSON value carried in the data field of a Kakune Core Server-Sent Event.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventVersion", "coreId", "eventId", "sequence", "timestamp", "type", "resourceId", "payload"],
+  "properties": {
+    "eventVersion": { "const": "1.0" },
+    "coreId": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "eventId": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "type": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$", "maxLength": 200 },
+    "resourceId": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "executionId": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "spanId": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "payload": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "apiVersion": "kakune.dev/v1",
+  "kind": "ProviderModelCapabilities",
+  "provider": {
+    "id": "minimax-personal",
+    "displayName": "MiniMax",
+    "capabilities": ["model-listing", "text-generation", "streaming", "tools"]
+  },
+  "models": [
+    {
+      "id": "MiniMax-M3",
+      "displayName": "MiniMax M3",
+      "capabilities": ["text-generation", "streaming", "tools", "structured-output"],
+      "contextWindowTokens": 200000,
+      "maxOutputTokens": 8192
+    }
+  ]
+}

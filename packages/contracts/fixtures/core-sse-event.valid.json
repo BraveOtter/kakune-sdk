@@ -1,0 +1,11 @@
+{
+  "eventVersion": "1.0",
+  "coreId": "core-local-1",
+  "eventId": "event-000042",
+  "sequence": 42,
+  "timestamp": "2026-09-09T12:34:56Z",
+  "type": "execution.completed",
+  "resourceId": "run-42",
+  "executionId": "run-42",
+  "payload": { "status": "completed" }
+}

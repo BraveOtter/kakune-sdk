@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kakune.dev/schemas/problem-details.schema.json",
+  "title": "Kakune API Problem Details",
+  "description": "RFC 9457 Problem Details fields with mandatory Kakune error metadata. The standard problem fields remain optional as allowed by RFC 9457.",
+  "type": "object",
+  "required": ["code", "message", "details", "retryable", "requestId", "traceId"],
+  "properties": {
+    "type": { "type": "string", "format": "uri-reference" },
+    "title": { "type": "string", "minLength": 1 },
+    "status": { "type": "integer", "minimum": 100, "maximum": 599 },
+    "detail": { "type": "string" },
+    "instance": { "type": "string", "format": "uri-reference" },
+    "code": { "type": "string", "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)*$", "maxLength": 200 },
+    "message": { "type": "string", "minLength": 1, "maxLength": 4000 },
+    "details": true,
+    "retryable": { "type": "boolean" },
+    "requestId": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "traceId": { "type": "string", "minLength": 1, "maxLength": 256 }
+  },
+  "additionalProperties": true
+}

@@ -1,6 +1,6 @@
 {
   "apiVersion": "kakune/v1",
   "kind": "Workflow",
-  "metadata": { "name": "Nightly Report" },
+  "metadata": { "id": "legacy", "name": "Legacy workflow" },
   "spec": { "triggers": {}, "steps": [] }
 }

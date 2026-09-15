@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kakune.dev/schemas/provider-model-capabilities.schema.json",
+  "title": "Kakune Provider and Model Capabilities v1",
+  "description": "A provider capability report and the capabilities of models currently available through it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "provider", "models"],
+  "properties": {
+    "apiVersion": { "const": "kakune.dev/v1" },
+    "kind": { "const": "ProviderModelCapabilities" },
+    "provider": { "$ref": "#/$defs/provider" },
+    "models": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/model" }
+    }
+  },
+  "$defs": {
+    "identifier": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{0,255}$" },
+    "providerCapability": {
+      "enum": ["model-listing", "text-generation", "embeddings", "streaming", "tools", "structured-output", "vision", "usage-reporting"]
+    },
+    "modelCapability": {
+      "enum": ["text-generation", "embeddings", "streaming", "tools", "structured-output", "vision", "json-schema-output"]
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "capabilities"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "capabilities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/providerCapability" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "capabilities"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "capabilities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/modelCapability" },
+          "uniqueItems": true
+        },
+        "contextWindowTokens": { "type": "integer", "minimum": 1 },
+        "maxOutputTokens": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

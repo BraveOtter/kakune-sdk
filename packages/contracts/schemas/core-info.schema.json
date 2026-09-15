@@ -4,10 +4,12 @@
   "title": "Kakune Core Information",
   "type": "object",
   "additionalProperties": false,
-  "required": ["apiVersion", "coreVersion", "capabilities"],
+  "required": ["apiVersion", "coreVersion", "coreId", "capabilities"],
   "properties": {
     "apiVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
     "coreVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$" },
+    "coreId": { "type": "string", "format": "uuid" },
+    "storageSchemaVersion": { "type": "integer", "minimum": 0 },
     "serverTime": { "type": "string", "format": "date-time" },
     "capabilities": {
       "type": "array",

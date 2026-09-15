@@ -1,60 +1,284 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://kakune.dev/schemas/workflow.schema.json",
-  "title": "Kakune Workflow Semantic Shape",
-  "description": "Validates the JSON-compatible value obtained after parsing a Kakune workflow YAML document.",
+  "title": "Kakune Workflow v1",
+  "description": "Canonical JSON-compatible semantic representation of a Kakune workflow YAML document.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "triggers",
+    "entry",
+    "nodes"
+  ],
   "properties": {
-    "apiVersion": { "const": "kakune/v1" },
-    "kind": { "const": "Workflow" },
+    "apiVersion": {
+      "const": "kakune/v1"
+    },
+    "kind": {
+      "const": "Workflow"
+    },
     "metadata": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["name"],
-      "properties": {
-        "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,62}$" },
-        "labels": {
-          "type": "object",
-          "additionalProperties": { "type": "string" }
-        }
+      "$ref": "#/$defs/metadata"
+    },
+    "inputs": {
+      "$ref": "#/$defs/schemaObject"
+    },
+    "triggers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/trigger"
       }
     },
-    "spec": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["triggers", "steps"],
-      "properties": {
-        "triggers": {
-          "type": "object",
-          "minProperties": 1,
-          "additionalProperties": {
-            "type": "object",
-            "additionalProperties": true
-          }
-        },
-        "steps": {
-          "type": "array",
-          "minItems": 1,
-          "items": { "$ref": "#/$defs/step" }
-        }
+    "entry": {
+      "$ref": "#/$defs/id"
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/node"
       }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/binding"
+      }
+    },
+    "policy": {
+      "$ref": "#/$defs/policy"
+    },
+    "layout": {
+      "$ref": "#/$defs/layout"
     }
   },
   "$defs": {
-    "step": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,62}$"
+    },
+    "nodeType": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+@[1-9][0-9]*$"
+    },
+    "metadata": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "plugin"],
+      "required": [
+        "id",
+        "name"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,62}$" },
-        "plugin": { "type": "string", "pattern": "^@[a-z0-9-]+/[a-z0-9-]+$" },
-        "with": { "type": "object", "additionalProperties": true },
-        "needs": {
-          "type": "array",
-          "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,62}$" },
-          "uniqueItems": true
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "maxLength": 256
+          }
+        }
+      }
+    },
+    "schemaObject": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "$ref": "#/$defs/nodeType"
+        },
+        "with": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "map": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          }
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "$ref": "#/$defs/nodeType"
+        },
+        "with": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "inputs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          }
+        },
+        "on": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]{0,62}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      }
+    },
+    "binding": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "literal"
+          ],
+          "properties": {
+            "literal": {}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "from"
+          ],
+          "properties": {
+            "from": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "expr"
+          ],
+          "properties": {
+            "expr": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "secret"
+          ],
+          "properties": {
+            "secret": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "timeout": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ai": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "budgetTokens": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "concurrency": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "maxRuns": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "overflow": {
+              "enum": [
+                "queue",
+                "reject"
+              ]
+            },
+            "maxQueued": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "maxParallelNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            }
+          }
         }
       }
     }

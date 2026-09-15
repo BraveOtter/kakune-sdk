@@ -1,6 +1,7 @@
 {
   "apiVersion": "1.0",
   "coreVersion": "0.1.0",
+  "coreId": "ff0a2b20-f31b-4d3d-b92a-05e19f4c0874",
   "serverTime": "2026-09-09T12:00:00Z",
   "capabilities": ["workflows", "plugins"]
 }

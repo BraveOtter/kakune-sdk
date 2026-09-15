@@ -1,0 +1,12 @@
+{
+  "format": "kakune-contexts/v2",
+  "exportedAt": "2026-09-09T12:34:56Z",
+  "contexts": [
+    {
+      "id": "local",
+      "name": "Local Core",
+      "endpoint": "ftp://127.0.0.1:7331",
+      "token": "must-not-be-exported"
+    }
+  ]
+}

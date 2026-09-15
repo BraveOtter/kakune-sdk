@@ -2,13 +2,14 @@
   "apiVersion": "kakune/v1",
   "kind": "Workflow",
   "metadata": {
-    "name": "nightly-report",
+    "id": "nightly-report",
+    "name": "Nightly report",
     "labels": { "team": "platform" }
   },
-  "spec": {
-    "triggers": { "schedule": { "cron": "0 0 * * *" } },
-    "steps": [
-      { "id": "build-report", "plugin": "@kakune/reports", "with": { "format": "json" } }
-    ]
-  }
+  "inputs": { "type": "object" },
+  "triggers": [{ "id": "manual", "type": "kakune.trigger.manual@1" }],
+  "entry": "build-report",
+  "nodes": [{ "id": "build-report", "type": "kakune.report.build@1", "with": { "format": "json" } }],
+  "policy": { "concurrency": { "maxRuns": 1, "overflow": "queue", "maxQueued": 10 } },
+  "layout": { "nodes": { "build-report": { "x": 80, "y": 120 } } }
 }
