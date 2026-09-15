@@ -1,0 +1,32 @@
+{
+  "name": "@kakune-ai/plugin-testkit",
+  "version": "0.1.0",
+  "description": "JSONL protocol validation and in-memory transports for Kakune plugin tests.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BraveOtter/kakune-sdk.git",
+    "directory": "packages/plugin-testkit"
+  },
+  "type": "module",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@kakune-ai/contracts": "workspace:^"
+  },
+  "publishConfig": {
+    "dependencies": {
+      "@kakune-ai/contracts": "^0.1.0"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "tsc -b tsconfig.json --clean",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}
