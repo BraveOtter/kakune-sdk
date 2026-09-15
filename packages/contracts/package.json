@@ -1,19 +1,30 @@
 {
-  "name": "@kakune/contracts",
+  "name": "@kakune-ai/contracts",
   "version": "0.1.0",
   "description": "Canonical Kakune protocol types and JSON Schemas.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BraveOtter/kakune-sdk.git",
+    "directory": "packages/contracts"
+  },
   "type": "module",
-  "files": ["dist", "schemas"],
+  "files": ["dist", "schemas", "fixtures", "openapi"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./fixtures/*": "./fixtures/*",
     "./schemas/core-info.schema.json": "./schemas/core-info.schema.json",
     "./schemas/workflow.schema.json": "./schemas/workflow.schema.json",
     "./schemas/plugin-manifest.schema.json": "./schemas/plugin-manifest.schema.json",
-    "./schemas/plugin-json-rpc-message.schema.json": "./schemas/plugin-json-rpc-message.schema.json"
+    "./schemas/plugin-json-rpc-message.schema.json": "./schemas/plugin-json-rpc-message.schema.json",
+    "./schemas/core-sse-event.schema.json": "./schemas/core-sse-event.schema.json",
+    "./schemas/connection-context-export.schema.json": "./schemas/connection-context-export.schema.json",
+    "./schemas/provider-model-capabilities.schema.json": "./schemas/provider-model-capabilities.schema.json",
+    "./schemas/problem-details.schema.json": "./schemas/problem-details.schema.json",
+    "./openapi/core-api.openapi.json": "./openapi/core-api.openapi.json"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

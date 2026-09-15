@@ -9,11 +9,22 @@
     "pnpm": ">=10.0.0"
   },
   "scripts": {
-    "build": "pnpm -r --if-present run build",
-    "clean": "pnpm -r --if-present run clean",
-    "test": "vitest run",
+    "build": "tsc -b && pnpm --filter @kakune-ai/sample-typescript run build",
+    "build:example": "pnpm --filter @kakune-ai/sample-typescript run build",
+    "check:generated": "git diff --exit-code -- .",
+    "check:packages": "node scripts/check-packages.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "clean": "tsc -b --clean && pnpm --filter @kakune-ai/sample-typescript run clean",
+    "test": "vitest run && pnpm test:rust",
+    "test:rust": "cargo test --locked --manifest-path packages/contracts/rust-harness/Cargo.toml",
+    "test:testkit": "vitest run packages/plugin-testkit/test",
     "test:watch": "vitest",
-    "typecheck": "pnpm -r --if-present run typecheck"
+    "typecheck": "tsc -b",
+    "typecheck:example": "pnpm --filter @kakune-ai/sample-typescript run typecheck",
+    "check:consumer": "node scripts/smoke-consumer.mjs",
+    "check:contracts": "node scripts/check-breaking-contracts.mjs",
+    "pack:release": "node scripts/release-artifacts.mjs",
+    "check:registry": "node scripts/smoke-registry-consumer.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.15.30",

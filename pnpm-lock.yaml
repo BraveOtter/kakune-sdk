@@ -21,18 +21,36 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@22.20.1)
 
+  examples/git-adapter: {}
+
+  examples/sample-typescript:
+    dependencies:
+      '@kakune-ai/sdk':
+        specifier: workspace:^
+        version: link:../../packages/sdk
+    devDependencies:
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
+
   packages/client: {}
 
   packages/contracts: {}
 
   packages/create-plugin: {}
 
+  packages/plugin-testkit:
+    dependencies:
+      '@kakune-ai/contracts':
+        specifier: workspace:^
+        version: link:../contracts
+
   packages/sdk:
     dependencies:
-      '@kakune/client':
+      '@kakune-ai/client':
         specifier: workspace:^
         version: link:../client
-      '@kakune/contracts':
+      '@kakune-ai/contracts':
         specifier: workspace:^
         version: link:../contracts
 

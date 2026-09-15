@@ -1,8 +1,13 @@
 {
-  "name": "@kakune/create-plugin",
+  "name": "@kakune-ai/create-plugin",
   "version": "0.1.0",
   "description": "Create a baseline Kakune plugin.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BraveOtter/kakune-sdk.git",
+    "directory": "packages/create-plugin"
+  },
   "type": "module",
   "files": ["dist"],
   "bin": {

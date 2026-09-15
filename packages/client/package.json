@@ -1,8 +1,13 @@
 {
-  "name": "@kakune/client",
+  "name": "@kakune-ai/client",
   "version": "0.1.0",
   "description": "Fetch and Server-Sent Events client for the Kakune API.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BraveOtter/kakune-sdk.git",
+    "directory": "packages/client"
+  },
   "type": "module",
   "files": ["dist"],
   "exports": {

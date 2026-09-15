@@ -1,8 +1,13 @@
 {
-  "name": "@kakune/sdk",
+  "name": "@kakune-ai/sdk",
   "version": "0.1.0",
   "description": "High-level TypeScript SDK for Kakune.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BraveOtter/kakune-sdk.git",
+    "directory": "packages/sdk"
+  },
   "type": "module",
   "files": ["dist"],
   "exports": {
@@ -12,8 +17,14 @@
     }
   },
   "dependencies": {
-    "@kakune/client": "workspace:^",
-    "@kakune/contracts": "workspace:^"
+    "@kakune-ai/client": "workspace:^",
+    "@kakune-ai/contracts": "workspace:^"
+  },
+  "publishConfig": {
+    "dependencies": {
+      "@kakune-ai/client": "^0.1.0",
+      "@kakune-ai/contracts": "^0.1.0"
+    }
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
