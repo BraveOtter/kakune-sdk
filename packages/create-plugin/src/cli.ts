@@ -3,10 +3,10 @@ import { resolve } from "node:path";
 import { createPlugin } from "./index.js";
 
 function usage(): string {
-  return "Usage: kakune-create-plugin <directory> --name @scope/name [--description text]";
+  return "Usage: kakune-create-plugin <directory> --id vendor.plugin [--name text] [--description text]";
 }
 
-function readArguments(argv: string[]): { directory: string; name: string; description?: string } {
+function readArguments(argv: string[]): { directory: string; id: string; name?: string; description?: string } {
   const [directory, ...flags] = argv;
   const values = new Map<string, string>();
   for (let index = 0; index < flags.length; index += 2) {
@@ -15,9 +15,9 @@ function readArguments(argv: string[]): { directory: string; name: string; descr
     if (!flag?.startsWith("--") || !value) throw new Error(usage());
     values.set(flag, value);
   }
-  const name = values.get("--name");
-  if (!directory || !name) throw new Error(usage());
-  return { directory: resolve(directory), name, description: values.get("--description") };
+  const id = values.get("--id");
+  if (!directory || !id) throw new Error(usage());
+  return { directory: resolve(directory), id, name: values.get("--name"), description: values.get("--description") };
 }
 
 try {
