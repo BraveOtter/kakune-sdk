@@ -1,0 +1,21 @@
+{
+  "apiVersion": "kakune.dev/v1",
+  "kind": "NodeDefinition",
+  "type": "kakune.hello@1",
+  "name": "Hello",
+  "description": "Returns a greeting for a name.",
+  "inputSchema": {
+    "type": "object",
+    "required": ["name"],
+    "properties": {
+      "name": { "type": "string", "minLength": 1 },
+      "greeting": { "type": "string", "minLength": 1 }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "message": { "type": "string" }
+    }
+  }
+}

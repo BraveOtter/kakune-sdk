@@ -1,0 +1,21 @@
+{
+  "manifestVersion": "1.0",
+  "id": "kakune.external-python",
+  "name": "External Python Hello",
+  "version": "0.1.0",
+  "pluginProtocol": ">=1.0.0 <2.0.0",
+  "runtime": {
+    "kind": "process",
+    "command": "python",
+    "args": ["plugin.py"]
+  },
+  "description": {
+    "en": "Standard-library JSON-RPC stdin/stdout protocol demonstrator."
+  },
+  "requires": {
+    "executables": [{ "name": "python", "version": ">=3.9.0", "versionArgs": ["--version"] }]
+  },
+  "contributes": {
+    "nodes": ["nodes/hello.node.json"]
+  }
+}

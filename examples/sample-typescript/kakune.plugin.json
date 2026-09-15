@@ -1,0 +1,21 @@
+{
+  "manifestVersion": "1.0",
+  "id": "kakune.sample-typescript",
+  "name": "TypeScript Hello",
+  "version": "0.1.0",
+  "pluginProtocol": ">=1.0.0 <2.0.0",
+  "runtime": {
+    "kind": "process",
+    "command": "node",
+    "args": ["dist/index.js"]
+  },
+  "description": {
+    "en": "A TypeScript hello node served over JSON-RPC stdio."
+  },
+  "requires": {
+    "executables": [{ "name": "node", "version": ">=22.0.0", "versionArgs": ["--version"] }]
+  },
+  "contributes": {
+    "nodes": ["nodes/hello.node.json"]
+  }
+}

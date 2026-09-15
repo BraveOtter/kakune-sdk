@@ -1,0 +1,32 @@
+{
+  "manifestVersion": "1.0",
+  "id": "kakune.git-adapter",
+  "name": "Git Status Adapter",
+  "version": "0.1.0",
+  "pluginProtocol": ">=1.0.0 <2.0.0",
+  "runtime": {
+    "kind": "process",
+    "command": "node",
+    "args": ["git-adapter.mjs"]
+  },
+  "author": {
+    "name": "Kakune"
+  },
+  "description": {
+    "en": "A standalone JSON-RPC process adapter that reads Git status."
+  },
+  "license": "MIT",
+  "requires": {
+    "executables": [
+      { "name": "node", "version": ">=22.0.0", "versionArgs": ["--version"] },
+      { "name": "git", "version": ">=2.0.0", "versionArgs": ["--version"] }
+    ]
+  },
+  "contributes": {
+    "nodes": ["nodes/git-status.node.json"]
+  },
+  "permissions": {
+    "process": ["git"],
+    "filesystem": ["read:repository"]
+  }
+}

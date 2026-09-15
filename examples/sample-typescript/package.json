@@ -1,0 +1,19 @@
+{
+  "name": "@kakune-ai/sample-typescript",
+  "version": "0.1.0",
+  "description": "TypeScript JSON-RPC stdio process plugin example for Kakune.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["dist", "kakune.plugin.json"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@kakune-ai/sdk": "workspace:^"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

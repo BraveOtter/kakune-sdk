@@ -1,0 +1,24 @@
+{
+  "apiVersion": "kakune.dev/v1",
+  "kind": "NodeDefinition",
+  "type": "kakune.git.status@1",
+  "name": "Git Status",
+  "description": "Returns the porcelain status for a local Git repository.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Repository path. Defaults to the plugin process working directory."
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "required": ["status", "dirty"],
+    "properties": {
+      "status": { "type": "string" },
+      "dirty": { "type": "boolean" }
+    }
+  }
+}
