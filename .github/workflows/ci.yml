@@ -10,14 +10,48 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-13, macos-14]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          node-version: 22
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.14.0
+          cache: pnpm
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.98.1 --profile minimal
       - run: corepack enable
       - run: pnpm install --frozen-lockfile
+      - run: pnpm check:release
       - run: pnpm typecheck
       - run: pnpm test
+      - run: pnpm test:testkit
+      - run: pnpm clean
       - run: pnpm build
+      - run: pnpm build:example
+      - run: pnpm check:packages
+      - run: pnpm check:consumer
+      - run: pnpm check:contracts
+      - run: pnpm check:generated
+
+  supply-chain:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.14.0
+          cache: pnpm
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.98.1 --profile minimal
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - name: Audit production JavaScript dependencies and report licenses
+        run: pnpm audit --prod --audit-level high && pnpm licenses list --prod
+      - name: Audit Rust dependencies
+        run: cargo install cargo-audit --locked && cargo audit --file packages/contracts/rust-harness/Cargo.lock --deny warnings

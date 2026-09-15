@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags: ["sdk-v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-22.04
+    environment: npm-production
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.14.0
+          cache: pnpm
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.98.1 --profile minimal
+      - run: corepack enable
+      - name: Use npm trusted publishing runtime
+        run: npm install --global npm@11.5.1
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check:release -- "$GITHUB_REF_NAME"
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm test:testkit
+      - run: pnpm clean
+      - run: pnpm build
+      - run: pnpm build:example
+      - run: pnpm check:packages
+      - run: pnpm check:consumer
+      - run: pnpm check:contracts
+      - run: pnpm check:generated
+      - run: pnpm pack:release -- --out release-artifacts
+      - name: Verify local release checksums
+        run: sha256sum --check release-artifacts/SHA256SUMS
+      - name: Publish exact verified tarballs with OIDC provenance
+        run: |
+          npm publish release-artifacts/kakune-contracts-*.tgz --access public --provenance
+          npm publish release-artifacts/kakune-client-*.tgz --access public --provenance
+          npm publish release-artifacts/kakune-sdk-*.tgz --access public --provenance
+          npm publish release-artifacts/kakune-create-plugin-*.tgz --access public --provenance
+          npm publish release-artifacts/kakune-plugin-testkit-*.tgz --access public --provenance
+      - name: Smoke the published registry packages
+        run: pnpm check:registry -- --version "${GITHUB_REF_NAME#sdk-v}" --out release-artifacts
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
+        with:
+          subject-path: release-artifacts/*
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: kakune-sdk-release
+          path: release-artifacts/
+          if-no-files-found: error
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" release-artifacts/* --generate-notes
